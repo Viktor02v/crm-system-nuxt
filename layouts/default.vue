@@ -14,6 +14,6 @@
 <style scoped>
 .grid {
 	display: grid;
-	grid-template-columns: 1fr 6fr;
+	grid-template-columns: 1fr 5fr;
 }
 </style>
