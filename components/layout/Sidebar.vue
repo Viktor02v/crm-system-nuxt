@@ -5,7 +5,7 @@
 <template>
 	<aside>
 		<NuxtLink to="/">
-			<NuxtImg width="100px" alt="" src="/logo.svg" />
+			<NuxtImg width="100px" alt="" src="/favicon.ico" />
 		</NuxtLink>
 	</aside>
 </template>

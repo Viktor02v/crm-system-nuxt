@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import Sidebar from '~/components/layout/Sidebar.vue';
+
 
 </script>
 
 <template>
 	<section class="grid" style="min-height:100vh">
-		<aside>
-			Sidebar
-		</aside>
+		<LayoutSidebar/>
 		<div>
 			<slot />
 		</div>
