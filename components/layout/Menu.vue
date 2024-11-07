@@ -6,7 +6,7 @@ import { MENU_DATA } from './menu.data';
 	<div>
 		<NuxtLink v-for="item in MENU_DATA" :key="item.name" :to="item.url" class="flex items-center py-1 px-3 rounded-lg w-full
 		hover:bg-gray-700 hover:shadow transition-all mb-2.5 text-xs md:text-base">
-			<Icon :name="item.icon" class="mr-3 text-white" />
+			<Icon :name="item.icon" class="mr-3 " />
 			<span class="text-white">{{ item.name }}</span>
 		</NuxtLink>
 	</div>

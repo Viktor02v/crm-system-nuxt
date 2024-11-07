@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
 </script>
-<!-- TODO: Appwrite config + Auth -->
+<!-- TODO: Auth -->
 <template>
 	<aside class="px-5 py-8 bg-sidebar h-full relative w-full">
 
 		<NuxtLink to="/" class="mb-10 block">
-			<NuxtImg alt="" src="/logo.webp" class="mx-auto w-[100px] md:w-[150px]" />
+			<NuxtImg alt="Logo" src="/logo-virus.webp" class="mx-auto w-[100px] md:w-[150px]" />
 		</NuxtLink>
 
 		<button class="absolute top-4 right-3 transition-colors">
