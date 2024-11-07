@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 </script>
-<!-- TODO: Appwrite config + Auth -->
+<!-- TODO: Auth -->
 <template>
 	<aside class="px-5 py-8 bg-sidebar h-full relative w-full">
 
