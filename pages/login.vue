@@ -1,5 +1,7 @@
 <script setup lang="ts">
-
+useHead({
+	title: 'Login',
+})
 </script>
 
 <template>
@@ -8,7 +10,7 @@
 			<h1 class="text-2xl font-bold text-center mb-5">Login</h1>
 
 			<form>
-				
+				<UiInput placeholder="Email" type="email" class="mb-3" />
 			</form>
 		</div>
 	</div>
