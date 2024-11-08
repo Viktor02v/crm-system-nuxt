@@ -37,6 +37,10 @@ const login = async () => {
 	// Turn Of Loader
 	isLoadingStore.set(false)
 }
+
+const register =  async() => {
+	await account.create()
+}
 </script>
 
 <template>
