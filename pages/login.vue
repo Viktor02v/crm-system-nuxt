@@ -1,7 +1,50 @@
 <script setup lang="ts">
+import { v4 as uuid } from 'uuid'
+
 useHead({
-	title: 'Login',
+	title: 'Login | CRM System',
 })
+
+const emailRef = ref('');
+const passwordRef = ref('');
+const nameRef = ref('');
+
+const isLoadingStore = useIsLoadingStore()
+const authStore = useAuthStore()
+const router = useRouter()
+
+const login = async () => {
+	// Turn On Loader
+	isLoadingStore.set(true)
+	// Creating Session
+	await account.createEmailPasswordSession(emailRef.value, passwordRef.value)
+	// Waiting for Current Account
+	const response = await account.get()
+	if (response) {
+		// Asign Current Account in Store
+		authStore.set({
+			email: response.email,
+			name: response.name,
+			status: response.status,
+		})
+	}
+
+	// Assing Void
+	emailRef.value = ''
+	passwordRef.value = ''
+	nameRef.value = ''
+	// Redirrect
+	await router.push('/')
+	// Turn Of Loader
+	isLoadingStore.set(false)
+}
+
+const register = async () => {
+	// Creating Session
+	await account.create(uuid(), emailRef.value, passwordRef.value, nameRef.value)
+	// Call for Login
+	await login()
+}
 </script>
 
 <template>
@@ -10,8 +53,15 @@ useHead({
 			<h1 class="text-2xl font-bold text-center mb-5">Login</h1>
 
 			<form>
-				<UiInput placeholder="Email" type="email" class="mb-3" />
+				<UiInput v-model="emailRef" placeholder="Email" type="email" class="mb-3" />
+				<UiInput v-model="passwordRef" placeholder="Password" type="password" class="mb-3" />
+				<UiInput v-model="nameRef" placeholder="Name" type="name" class="mb-3" />
 			</form>
+
+			<div class="flex items-center justify-center gap-5">
+				<UiButton type="button" @click="login">Login</UiButton>
+				<UiButton type="button" @click="register">Register</UiButton>
+			</div>
 		</div>
 	</div>
 </template>

@@ -4,7 +4,7 @@
 
 <template>
 	<div class="wrapper">
-		<img src="/loader.gif" alt="">
+		<NuxtImg class="w-[200px]" src="/loader.gif" alt="" />
 	</div>
 </template>
 
