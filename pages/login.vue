@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { v4 as uuid } from 'uuid'
 
 useHead({
 	title: 'Login | CRM System',
@@ -15,7 +16,7 @@ const router = useRouter()
 const login = async () => {
 	// Turn On Loader
 	isLoadingStore.set(true)
-	// Crreating Session
+	// Creating Session
 	await account.createEmailPasswordSession(emailRef.value, passwordRef.value)
 	// Waiting for Current Account
 	const response = await account.get()
@@ -38,8 +39,11 @@ const login = async () => {
 	isLoadingStore.set(false)
 }
 
-const register =  async() => {
-	await account.create()
+const register = async () => {
+	// Creating Session
+	await account.create(uuid(), emailRef.value, passwordRef.value, nameRef.value)
+	// Call for Login
+	await login()
 }
 </script>
 
@@ -55,8 +59,8 @@ const register =  async() => {
 			</form>
 
 			<div class="flex items-center justify-center gap-5">
-				<UiButton type="button">Login</UiButton>
-				<UiButton type="button">Register</UiButton>
+				<UiButton type="button" @click="login">Login</UiButton>
+				<UiButton type="button" @click="register">Register</UiButton>
 			</div>
 		</div>
 	</div>
