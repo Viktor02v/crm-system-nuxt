@@ -1,4 +1,4 @@
 export function useBorderQuery() {
 	
-	return{}
+	return useQuery
 }
