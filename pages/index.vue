@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import type { ICard, IColumn } from '~/components/board/board.types';
+
 useSeoMeta({
 	title: 'Home | CRM System'
 })
+
+// States
+const dragCardRef = ref<ICard | null>(null)
+const sourceColumnRef = ref<IColumn | null>(null)
 </script>
 
 <template>
