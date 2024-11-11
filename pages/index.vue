@@ -3,6 +3,7 @@ import type { ICard, IColumn } from '~/components/board/board.types';
 import { useBoardQuery } from '~/components/board/useBoardQuery';
 import { convertCurrency } from '@/utils/convertCurrency'
 
+import dayjs from 'dayjs'
 useSeoMeta({
 	title: 'Home | CRM System'
 })
@@ -38,7 +39,7 @@ const { data, isLoading, refetch } = useBoardQuery()
 							<UiCardDescription>{{
 								convertCurrency(card.price)
 							}}</UiCardDescription>
-							<UiCardFooter>Date</UiCardFooter>
+							<UiCardFooter>{{ dayjs(card.$createdAt).format('DD MMMM YYYY') }}</UiCardFooter>
 						</UiCard>
 					</div>
 				</div>
