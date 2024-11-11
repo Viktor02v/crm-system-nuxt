@@ -2,8 +2,8 @@
 import type { ICard, IColumn } from '~/components/board/board.types';
 import { useBoardQuery } from '~/components/board/useBoardQuery';
 import { convertCurrency } from '@/utils/convertCurrency'
-
 import dayjs from 'dayjs'
+
 useSeoMeta({
 	title: 'Home | CRM System'
 })
@@ -14,15 +14,13 @@ const sourceColumnRef = ref<IColumn | null>(null)
 
 
 const { data, isLoading, refetch } = useBoardQuery()
-
 </script>
-
+<!-- TODO: Create deal -->
+<!-- TODO: DND Cards -->
 <template>
 	<div class="p-10">
 		<h1 class="font-bold text-2xl mb-10">CRM System</h1>
-
 		<div v-if="isLoading">Loading...</div>
-
 		<div v-else>
 			<div class="grid grid-cols-4 gap-16">
 
@@ -33,6 +31,8 @@ const { data, isLoading, refetch } = useBoardQuery()
 					</div>
 
 					<div>
+						<BoardCreateDeal />
+
 						<UiCard v-for="card in column.items" :key="card.id" class="mb-3 text-sm" draggable="true">
 							<UiCardHeader role="button">
 								<UiCardTitle>{{ card.name }}</UiCardTitle>
@@ -41,7 +41,7 @@ const { data, isLoading, refetch } = useBoardQuery()
 									convertCurrency(card.price)
 								}}</UiCardDescription>
 							</UiCardHeader>
-							
+
 							<UiCardContent>Company {{ card.companyName }}</UiCardContent>
 
 							<UiCardFooter>{{ dayjs(card.$createdAt).format('DD MMMM YYYY') }}</UiCardFooter>
