@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ICard, IColumn } from '~/components/board/board.types';
 import { useBoardQuery } from '~/components/board/useBoardQuery';
+import { convertCurrency } from '@/utils/convertCurrency'
 
 useSeoMeta({
 	title: 'Home | CRM System'
@@ -22,11 +23,26 @@ const { data, isLoading, refetch } = useBoardQuery()
 		<div v-if="isLoading">Loading...</div>
 
 		<div v-else>
-			<UiCard class="mb-3" draggable="true">
-				<UiCardHeader role="button">name Card</UiCardHeader>
-				<UiCardContent>Company</UiCardContent>
-				<UiCardFooter>Date</UiCardFooter>
-			</UiCard>
+			<div class="grid grid-cols-4 gap-16">
+
+				<div v-for="(column, index) in data" :key="column.id">
+
+					<div class="rounded bg-slate-700 py-1 px-5 mb-2 text-center">
+						{{ column.name }}
+					</div>
+
+					<div>
+						<UiCard v-for="card in column.items" :key="card.id" class="mb-3" draggable="true">
+							<UiCardHeader role="button">{{ card.name }}</UiCardHeader>
+							<UiCardContent>Company {{ card.companyName }}</UiCardContent>
+							<UiCardDescription>{{
+								convertCurrency(card.price)
+							}}</UiCardDescription>
+							<UiCardFooter>Date</UiCardFooter>
+						</UiCard>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
