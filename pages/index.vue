@@ -31,9 +31,9 @@ const { data, isLoading, refetch } = useBoardQuery()
 					</div>
 
 					<div>
-						<BoardCreateDeal />
+						<BoardCreateDeal :refetch="refetch" :status="column.id" />
 
-						<UiCard v-for="card in column.items" :key="card.id" class="mb-3 text-sm" draggable="true">
+						<UiCard v-for="card in column.items" :key="card.id" class="mb-5 text-sm" draggable="true">
 							<UiCardHeader role="button">
 								<UiCardTitle>{{ card.name }}</UiCardTitle>
 

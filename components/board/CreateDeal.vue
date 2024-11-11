@@ -50,6 +50,7 @@ const { mutate, isPending } = useMutation({
 
 const onSubmit = handleSubmit(values => {
 	mutate(values)
+	isOpenForm.value = !isOpenForm.value
 })
 </script>
 
@@ -58,15 +59,15 @@ const onSubmit = handleSubmit(values => {
 		<button @click="isOpenForm = !isOpenForm"
 			class="transition-all opacity-5 hover:opacity-100 hover:text-[#a252c8] ">
 
-			<Icon v-if="isOpenForm" name="radix-icons:arrow-up" class="fade-in-100 fade-out-0" size="25" />
+			<Icon v-if="isOpenForm" name="radix-icons:arrow-up" class="fade-in-100 fade-out-0" size="35" />
 
-			<Icon v-else name="radix-icons:plus-circled" class="fade-in-100 fade-out-0" size="25" />
+			<Icon v-else name="radix-icons:plus-circled" class="fade-in-100 fade-out-0" size="35" />
 		</button>
 
 		<form v-if="isOpenForm" @submit="onSubmit" class="form">
 			<UiInput placeholder="Appellation" v-model="name" v-bind="nameAttrs" type="text" class="input" />
 
-			<UiInput placeholder="Price" v-model="price" v-bind="priceAttrs" type="text" class="input" />
+			<UiInput placeholder="Price" v-model="price" v-bind="priceAttrs" type="number" class="input" />
 
 			<UiInput placeholder="Email" v-model="customerEmail" v-bind="customerEmailAttrs" type="text" class="input" />
 
