@@ -33,12 +33,17 @@ const { data, isLoading, refetch } = useBoardQuery()
 					</div>
 
 					<div>
-						<UiCard v-for="card in column.items" :key="card.id" class="mb-3" draggable="true">
-							<UiCardHeader role="button">{{ card.name }}</UiCardHeader>
+						<UiCard v-for="card in column.items" :key="card.id" class="mb-3 text-sm" draggable="true">
+							<UiCardHeader role="button">
+								<UiCardTitle>{{ card.name }}</UiCardTitle>
+
+								<UiCardDescription>{{
+									convertCurrency(card.price)
+								}}</UiCardDescription>
+							</UiCardHeader>
+							
 							<UiCardContent>Company {{ card.companyName }}</UiCardContent>
-							<UiCardDescription>{{
-								convertCurrency(card.price)
-							}}</UiCardDescription>
+
 							<UiCardFooter>{{ dayjs(card.$createdAt).format('DD MMMM YYYY') }}</UiCardFooter>
 						</UiCard>
 					</div>
