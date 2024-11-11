@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useMutation } from '@tanstack/vue-query'
-import { v4 as uuidv4 } from 'uuid'
 import { defineProps } from 'vue'
-import { COLLECTION_DEALS, DB_ID } from '@/utils/app.constants';
 import type { IDeal } from '~/types/deals.types';
+import { v4 as uuid } from 'uuid'
+import { DB_ID, COLLECTION_DEALS } from '@/utils/app.constants';
+
 
 const isOpenForm = ref(false)
 
@@ -16,15 +17,40 @@ interface IDealFormState extends Pick<IDeal, 'name' | 'price'> {
 }
 
 const props = defineProps({
-	status:{
+	status: {
 		type: String,
-		default:''
+		default: ''
 	},
 	refetch: {
 		type: Function,
-		default:''
+		default: ''
 	},
-}) 
+})
+
+const { handleSubmit, defineField, handleReset } = useForm<IDealFormState>({
+	initialValues: {
+		status: props.status
+	}
+})
+
+const [name, nameAttrs] = defineField('name')
+const [price, priceAttrs] = defineField('price')
+const [customerEmail, customerEmailAttrs] = defineField('customer.email')
+const [customerName, customerNameAttrs] = defineField('customer.name')
+
+
+const { mutate, isPending } = useMutation({
+	mutationKey: ['create a new deal'],
+	mutationFn: (data: IDealFormState) => DB.createDocument(DB_ID, COLLECTION_DEALS, uuid(), data),
+	onSuccess() {
+		props.refetch && props.refetch()
+		handleReset()
+	}
+})
+
+const onSubmit = handleSubmit(values => {
+	mutate(values)
+})
 </script>
 
 <template>
