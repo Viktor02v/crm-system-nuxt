@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ICard, IColumn } from '~/components/board/board.types';
+import { useBoardQuery } from '~/components/board/useBoardQuery';
 
 useSeoMeta({
 	title: 'Home | CRM System'
@@ -8,6 +9,9 @@ useSeoMeta({
 // States
 const dragCardRef = ref<ICard | null>(null)
 const sourceColumnRef = ref<IColumn | null>(null)
+
+
+useBoardQuery()
 </script>
 
 <template>
