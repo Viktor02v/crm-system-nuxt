@@ -63,8 +63,18 @@ const onSubmit = handleSubmit(values => {
 			<Icon v-else name="radix-icons:plus-circled" class="fade-in-100 fade-out-0" size="25" />
 		</button>
 
-		<form>
+		<form v-if="isOpenForm" @submit="onSubmit" class="form">
+			<UiInput placeholder="Appellation" v-model="name" v-bind="nameAttrs" type="text" class="input" />
 
+			<UiInput placeholder="Price" v-model="price" v-bind="priceAttrs" type="text" class="input" />
+
+			<UiInput placeholder="Email" v-model="customerEmail" v-bind="customerEmailAttrs" type="text" class="input" />
+
+			<UiInput placeholder="Company" v-model="customerName" v-bind="customerNameAttrs" type="text" class="input" />
+
+			<button class="btn" :disabled="isPending">
+				{{ isPending ? 'Loading...' : 'Add' }}
+			</button>
 		</form>
 	</div>
 </template>
