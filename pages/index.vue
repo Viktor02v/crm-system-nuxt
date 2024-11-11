@@ -11,14 +11,17 @@ const dragCardRef = ref<ICard | null>(null)
 const sourceColumnRef = ref<IColumn | null>(null)
 
 
-useBoardQuery()
+const { data, isLoading, refetch } = useBoardQuery()
+
 </script>
 
 <template>
 	<div class="p-10">
 		<h1 class="font-bold text-2xl mb-10">CRM System</h1>
 
-		<div>
+		<div v-if="isLoading">Loading...</div>
+
+		<div v-else>
 			<UiCard class="mb-3" draggable="true">
 				<UiCardHeader role="button">name Card</UiCardHeader>
 				<UiCardContent>Company</UiCardContent>
