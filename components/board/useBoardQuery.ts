@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/vue-query";
 import { BOARD_DATA } from "./board.data";
 import type { IDeal } from "~/types/deals.types";
+import type { IColumn } from "./board.types";
 
 export function useBoardQuery() {
 	
@@ -11,7 +12,10 @@ export function useBoardQuery() {
 		queryFn: () => DB.listDocuments(DB_ID, COLLECTION_DEALS), //!! DB_ID - is an id of our database, COLLECTION_DEALS - is an id of the collection that we want to get the documents from.
 		// This option can be used to transform or select a part of the data returned by the query function.
 		select(data){ // Get the data 
-			const newBoard = [...BOARD_DATA] //Assign BOARD_DATA(our columns) to the newBoard constant 
+			const newBoard: IColumn[] = BOARD_DATA.map(column => ({
+				...column,
+				items:[],
+			}))//Assign BOARD_DATA(our columns) to the newBoard constant 
 			const deals = data.documents as unknown as IDeal[] // Assign the data that we receive to the deals constant and handle it like IDeal[]
 			
 			//Use forOf method to find the column that gonna be meeting with the criteria (Enum|| status) of the deal to push it in column that corresponds the same criteria
