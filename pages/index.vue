@@ -6,6 +6,7 @@ import dayjs from 'dayjs'
 import { useMutation } from '@tanstack/vue-query';
 import type { EnumStatus } from '~/types/deals.types';
 import { DB_ID, COLLECTION_DEALS } from '@/utils/app.constants';
+import { generateColumnStyle } from '~/components/board/generate-gradient';
 
 useSeoMeta({
 	title: 'Home | CRM System'
@@ -33,7 +34,6 @@ const { mutate } = useMutation({
 	},
 })
 
-
 function handleDragStart(card: ICard, column: IColumn) {
 	dragCard.value = card
 	sourceColumn.value = column
@@ -49,7 +49,7 @@ function handleDrop(targetColumn: IColumn) {
 	}
 }
 </script>
-<!-- TODO: DND Cards -->
+
 <template>
 	<div class="p-10">
 		<h1 class="font-bold text-2xl mb-10">CRM System</h1>
@@ -60,7 +60,8 @@ function handleDrop(targetColumn: IColumn) {
 				<div @dragover="handleDragOver" @drop="() => handleDrop(column)" v-for="(column, index) in data"
 					:key="column.id">
 
-					<div class="rounded bg-slate-700 py-1 px-5 mb-2 text-center">
+					<div class="rounded bg-slate-700 py-1 px-5 mb-2 text-center"
+						:style="generateColumnStyle(index, data?.length)">
 						{{ column.name }}
 					</div>
 
