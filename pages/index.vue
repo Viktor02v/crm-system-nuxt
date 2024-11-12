@@ -3,6 +3,9 @@ import type { ICard, IColumn } from '~/components/board/board.types';
 import { useBoardQuery } from '~/components/board/useBoardQuery';
 import { convertCurrency } from '@/utils/convertCurrency'
 import dayjs from 'dayjs'
+import { useMutation } from '@tanstack/vue-query';
+import type { EnumStatus } from '~/types/deals.types';
+import { DB_ID, COLLECTION_DEALS } from '@/utils/app.constants';
 
 useSeoMeta({
 	title: 'Home | CRM System'
@@ -12,10 +15,25 @@ useSeoMeta({
 const dragCardRef = ref<ICard | null>(null)
 const sourceColumnRef = ref<IColumn | null>(null)
 
-
 const { data, isLoading, refetch } = useBoardQuery()
+
+type TypeMutationVariables = {
+	docId: string,
+	status?: EnumStatus,
+}
+
+const { mutate } = useMutation({
+	mutationKey: ['move card'],
+	mutationFn: ({ docId, status }: TypeMutationVariables) =>
+		DB.updateDocument(DB_ID, COLLECTION_DEALS, docId, {
+			status,
+		}),
+	onSuccess: () => {
+		refetch()
+	},
+})
+
 </script>
-<!-- TODO: Create deal -->
 <!-- TODO: DND Cards -->
 <template>
 	<div class="p-10">
