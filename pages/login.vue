@@ -14,29 +14,35 @@ const authStore = useAuthStore()
 const router = useRouter()
 
 const login = async () => {
-	// Turn On Loader
-	isLoadingStore.set(true)
-	// Creating Session
-	await account.createEmailPasswordSession(emailRef.value, passwordRef.value)
-	// Waiting for Current Account
-	const response = await account.get()
-	if (response) {
-		// Asign Current Account in Store
-		authStore.set({
-			email: response.email,
-			name: response.name,
-			status: response.status,
-		})
+	try {
+		// Turn On Loader
+		isLoadingStore.set(true)
+		// Creating Session
+		await account.createEmailPasswordSession(emailRef.value, passwordRef.value)
+		// Waiting for Current Account
+		const response = await account.get()
+		if (response) {
+			// Asign Current Account in Store
+			authStore.set({
+				email: response.email,
+				name: response.name,
+				status: response.status,
+			})
+		}
+		// Redirrect
+		await router.push('/')
+	} catch (error) {
+		// Handle invalid credentials error or any other errors
+		console.error("Login failed:", error)
+		alert("Invalid email or password. Please try again.")
+	} finally {
+		// Assing Void
+		emailRef.value = ''
+		passwordRef.value = ''
+		nameRef.value = ''
+		// Turn Of Loader
+		isLoadingStore.set(false)
 	}
-
-	// Assing Void
-	emailRef.value = ''
-	passwordRef.value = ''
-	nameRef.value = ''
-	// Redirrect
-	await router.push('/')
-	// Turn Of Loader
-	isLoadingStore.set(false)
 }
 
 const register = async () => {
