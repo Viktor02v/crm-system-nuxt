@@ -4,7 +4,7 @@ import { useDealSlideStore } from '@/store/deal-slide.store';
 
 
 
-export function useCommentsByDeal() {
+export function useComments(){
 	const store = useDealSlideStore()
 	const cardId = store.card?.id || ''
 	return useQuery({
