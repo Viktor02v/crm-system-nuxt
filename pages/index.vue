@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/vue-query';
 import type { EnumStatus } from '~/types/deals.types';
 import { DB_ID, COLLECTION_DEALS } from '@/utils/app.constants';
 import { generateColumnStyle } from '~/components/board/generate-gradient';
+import { useDealSlideStore } from '@/store/deal-slide.store';
 
 useSeoMeta({
 	title: 'Home | CRM System'
@@ -15,8 +16,8 @@ useSeoMeta({
 // States
 const dragCard = ref<ICard | null>(null)
 const sourceColumn = ref<IColumn | null>(null)
-
 const { data, isLoading, refetch } = useBoardQuery()
+const store = useDealSlideStore();
 
 type TypeMutationVariables = {
 	docId: string,
@@ -70,7 +71,8 @@ function handleDrop(targetColumn: IColumn) {
 
 						<UiCard @dragstart="() => handleDragStart(card, column)" v-for="card in column.items" :key="card.id"
 							class="mb-5 text-sm" draggable="true">
-							<UiCardHeader role="button">
+
+							<UiCardHeader role="button" @click="store.set(card)">
 								<UiCardTitle>{{ card.name }}</UiCardTitle>
 
 								<UiCardDescription>{{
@@ -85,6 +87,7 @@ function handleDrop(targetColumn: IColumn) {
 					</div>
 				</div>
 			</div>
+			<BoardSlideover />
 		</div>
 	</div>
 
@@ -92,4 +95,5 @@ function handleDrop(targetColumn: IColumn) {
 
 
 
-<style scoped></style>
+<style scoped>
+</style>

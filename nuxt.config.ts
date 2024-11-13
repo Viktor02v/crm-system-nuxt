@@ -9,7 +9,6 @@ modules: [
 '@nuxt/image',
 '@nuxt/ui',
 'shadcn-nuxt',
-'@nuxtjs/color-mode',
 ['@nuxtjs/google-fonts', {
 				families: {
 							Lato:{
