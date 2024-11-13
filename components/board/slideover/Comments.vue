@@ -7,7 +7,7 @@ const store = useDealSlideStore();
 
 <template>
 	<div>
-
+		
 	</div>
 </template>
 
