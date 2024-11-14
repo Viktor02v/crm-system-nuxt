@@ -47,11 +47,23 @@ const onSubmit = handleSubmit(values => {
 </script>
 
 <template>
-	<div>
+	<div class="p-10">
+		<h1 class="font-bold text-2xl mb-10"><span class="mr-2">Editing</span> {{ (data as unknown as ICustomerFormState)?.name }}</h1>
 
+		<form @submit="onSubmit" class="form">
+			<UiInput placeholder="Apellation" v-model="name" v-bind="nameAttrs" type="text" class="input" />
+			<UiInput placeholder="Email" v-model="email" v-bind="emailAttrs" type="text" class="input" />
+			<UiInput placeholder="From Source" v-model="fromSource" v-bind="fromSourceAttrs" type="text" class="input" />
+
+			<UiButton :disabled="isPending" variant="secondary" class="mt-3">
+				{{ isPending ? 'Loading...' : 'Save' }}
+			</UiButton>
+		</form>
 	</div>
 </template>
 
 <style scoped>
-
+.input {
+	@apply border-[#161c26] mb-2 placeholder:text-[#748092] focus:border-border transition-colors;
+}
 </style>
