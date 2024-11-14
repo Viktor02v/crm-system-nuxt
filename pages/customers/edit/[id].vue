@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import { storage } from '@/utils/appwrite'
+import { v4 as uuid } from 'uuid'
 import { useMutation, useQuery } from '@tanstack/vue-query'
 import { COLLECTION_CUSTOMERS, DB_ID, STORAGE_ID } from '@/utils/app.constants';
 import type { ICustomer } from '~/types/deals.types';
+
+interface InputFileEvent extends Event {
+	target: HTMLInputElement
+}
 
 interface ICustomerFormState
 	extends Pick<ICustomer, 'avatar_url' | 'email' | 'name' | 'from_source'> { }
@@ -41,19 +47,47 @@ const { mutate, isPending } = useMutation({
 		DB.updateDocument(DB_ID, COLLECTION_CUSTOMERS, customerId, data),
 })
 
+const { mutate: uploadImage, isPending: isUploadImagePending } = useMutation({
+	mutationKey: ['uploadImage'],
+	mutationFn: (file: File) => storage.createFile(STORAGE_ID, uuid(), file),
+	onSuccess(data) {
+		const response = storage.getFileDownload(STORAGE_ID, data.$id)
+		setFieldValue('avatar_url', response.href)
+	}
+})
+
 const onSubmit = handleSubmit(values => {
 	mutate(values)
 })
+
+function handleFileChange(event: InputFileEvent) {
+	const file = event.target.files?.[0];
+	if (file) {
+		uploadImage(file);
+	}
+}
 </script>
 
 <template>
 	<div class="p-10">
-		<h1 class="font-bold text-2xl mb-10"><span class="mr-2">Editing</span> {{ (data as unknown as ICustomerFormState)?.name }}</h1>
+		<h1 class="font-bold text-2xl mb-10"><span class="mr-2">Editing</span> {{ (data as unknown as
+			ICustomerFormState)?.name }}</h1>
 
 		<form @submit="onSubmit" class="form">
 			<UiInput placeholder="Apellation" v-model="name" v-bind="nameAttrs" type="text" class="input" />
 			<UiInput placeholder="Email" v-model="email" v-bind="emailAttrs" type="text" class="input" />
 			<UiInput placeholder="From Source" v-model="fromSource" v-bind="fromSourceAttrs" type="text" class="input" />
+
+			<img v-if="values.avatar_url || isUploadImagePending" :src="values.avatar_url" alt="" width="50" height="50"
+				class="rounded-full my-4" />
+
+			<div class="grid w-full max-w-sm items-center gap-1.5 input">
+				<label>
+					<div class="text-sm mb-2">Logo</div>
+					<UiInput type="file" @change="handleFileChange" :disabled="isUploadImagePending" />
+				</label>
+			</div>
+
 
 			<UiButton :disabled="isPending" variant="secondary" class="mt-3">
 				{{ isPending ? 'Loading...' : 'Save' }}
@@ -64,6 +98,6 @@ const onSubmit = handleSubmit(values => {
 
 <style scoped>
 .input {
-	@apply border-[#161c26] mb-2 placeholder:text-[#748092] focus:border-border transition-colors;
+	@apply border-[#161c26] mb-4 placeholder:text-[#748092] focus:border-border transition-colors;
 }
 </style>
