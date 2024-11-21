@@ -10,7 +10,7 @@ interface InputFileEvent extends Event {
 }
 
 interface ICustomerFormState
-	extends Pick<ICustomer, "avatar_url" | "email" | "name" | 'from_source'> { } 
+	extends Pick<ICustomer, "avatar_url" | "email" | "name" | 'from_source'> { }
 
 const router = useRouter();
 useHead({
@@ -53,7 +53,7 @@ const { mutate: uploadImage, isPending: isUploadImagePending } = useMutation({
 	mutationFn: (file: File) => storage.createFile(STORAGE_ID, uuid(), file),
 	onSuccess(data) {
 		const response = storage.getFileDownload(STORAGE_ID, data.$id);
-		
+
 		setFieldValue("avatar_url", response);
 	},
 });
