@@ -1,8 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-router: {  
-				pages: false 
-},
+ssr: false,
 compatibilityDate: '2024-04-03',
 devtools: { enabled: true },
 modules: [
@@ -30,6 +28,6 @@ shadcn: {
    componentDir:'./components/ui'
 },
 pinia: {
-				storesDirs: ['./store/**'],
+storesDirs: ['./store/**'],
 },
 })
