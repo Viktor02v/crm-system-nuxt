@@ -1,6 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-ssr: false,
+	build: {
+		extend(config, { isServer }) {
+		  if (isServer) {
+			 config.externals = config.externals || {};
+			 config.externals['nitropa'] = 'commonjs nitropa';
+			 config.externals['nitropack'] = 'commonjs nitropack';
+		  }
+		},
+	 },
 compatibilityDate: '2024-04-03',
 devtools: { enabled: true },
 modules: [
